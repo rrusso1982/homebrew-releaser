@@ -29,9 +29,15 @@ class Git:
                 '--depth=1',
                 f'https://x-access-token:{GITHUB_TOKEN}@github.com/{homebrew_owner}/{homebrew_tap}.git',
             ],
-            ['git', '-C', homebrew_tap, 'config', 'user.name', f'"{commit_owner}"'],
-            ['git', '-C', homebrew_tap, 'config', 'user.email', commit_email],
         ]
+        if commit_owner:
+            commands.append(
+                ['git', '-C', homebrew_tap, 'config', 'user.name', f'"{commit_owner}"']
+            )
+        if commit_email:
+            commands.append(
+                ['git', '-C', homebrew_tap, 'config', 'user.email', commit_email]
+            )
 
         for command in commands:
             Git._run_git_subprocess(command)
@@ -45,10 +51,12 @@ class Git:
         Git._run_git_subprocess(command, 'Assets added to git commit successfully.')
 
     @staticmethod
-    def commit(homebrew_tap: str, repo_name: str, version: str):
+    def commit(homebrew_tap: str, repo_name: str, version: str, sign_commit: bool):
         """Commits assets to the Homebrew tap (repo)."""
         # fmt: off
         command = ['git', '-C', homebrew_tap, 'commit', '-m', f'chore: brew formula update for {repo_name} {version}']  # noqa
+        if sign_commit:
+            command.append("-S")
         # fmt: on
         Git._run_git_subprocess(command, 'Assets committed successfully.')
 
