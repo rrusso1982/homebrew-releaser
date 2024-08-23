@@ -37,6 +37,7 @@ INSTALL = os.getenv('INPUT_INSTALL')
 HOMEBREW_OWNER = os.getenv('INPUT_HOMEBREW_OWNER')
 
 # Optional GitHub Action env variables from user
+# These are allowed to be empty so we can inherit the signing capabilities of the actions key
 COMMIT_OWNER = os.getenv('INPUT_COMMIT_OWNER', '')
 COMMIT_EMAIL = os.getenv('INPUT_COMMIT_EMAIL', '')
 SIGN_COMMIT = json.load(os.getenv('SIGN_COMMIT', 'false'))
