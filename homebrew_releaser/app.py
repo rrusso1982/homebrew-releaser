@@ -40,7 +40,7 @@ HOMEBREW_OWNER = os.getenv('INPUT_HOMEBREW_OWNER')
 # These are allowed to be empty so we can inherit the signing capabilities of the actions key
 COMMIT_OWNER = os.getenv('INPUT_COMMIT_OWNER', '')
 COMMIT_EMAIL = os.getenv('INPUT_COMMIT_EMAIL', '')
-SIGN_COMMIT = json.load(os.getenv('SIGN_COMMIT', 'false'))
+SIGN_COMMIT = json.loads(os.getenv('SIGN_COMMIT', 'false'))
 DEPENDS_ON = os.getenv('INPUT_DEPENDS_ON')
 TEST = os.getenv('INPUT_TEST')
 UPDATE_README_TABLE = (
