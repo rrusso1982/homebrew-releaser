@@ -20,11 +20,15 @@ inputs:
   commit_owner:
     description: "Git author info used to commit to the homebrew tap."
     required: false
-    default: "homebrew-releaser@example.com"
+    default: ""
   commit_email:
     description: "Git author info used to commit to the homebrew tap."
     required: false
-    default: "homebrew-releaser@example.com"
+    default: ""
+  sign_commit:
+    description: "If the commit will be signed."
+    required: false
+    default: "false"
   depends_on:
     description: "Custom dependencies in case other formulas are needed to build the current one (can be multiline)."
     required: false
@@ -74,6 +78,7 @@ runs:
     - ${{ inputs.github_token }}
     - ${{ inputs.commit_owner }}
     - ${{ inputs.commit_email }}
+    - ${{ inputs.sign_commit }}
     - ${{ inputs.install }}
     - ${{ inputs.test }}
     - ${{ inputs.target_darwin_amd64 }}

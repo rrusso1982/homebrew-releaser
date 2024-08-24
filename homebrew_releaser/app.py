@@ -1,3 +1,4 @@
+import json
 import os
 from typing import Optional
 
@@ -36,8 +37,10 @@ INSTALL = os.getenv('INPUT_INSTALL')
 HOMEBREW_OWNER = os.getenv('INPUT_HOMEBREW_OWNER')
 
 # Optional GitHub Action env variables from user
-COMMIT_OWNER = os.getenv('INPUT_COMMIT_OWNER', 'homebrew-releaser')
-COMMIT_EMAIL = os.getenv('INPUT_COMMIT_EMAIL', 'homebrew-releaser@example.com')
+# These are allowed to be empty so we can inherit the signing capabilities of the actions key
+COMMIT_OWNER = os.getenv('INPUT_COMMIT_OWNER', '')
+COMMIT_EMAIL = os.getenv('INPUT_COMMIT_EMAIL', '')
+SIGN_COMMIT = json.loads(os.getenv('SIGN_COMMIT', 'false'))
 DEPENDS_ON = os.getenv('INPUT_DEPENDS_ON')
 TEST = os.getenv('INPUT_TEST')
 UPDATE_README_TABLE = (
@@ -171,7 +174,7 @@ class App:
 
         # Although users can skip a commit, still commit (and don't push) to dry-run a commit
         Git.add(HOMEBREW_TAP)
-        Git.commit(HOMEBREW_TAP, GITHUB_REPO, version)
+        Git.commit(HOMEBREW_TAP, GITHUB_REPO, version, SIGN_COMMIT)
 
         if SKIP_COMMIT:
             logger.info(f'Skipping upload of checksum.txt to {HOMEBREW_TAP}.')
