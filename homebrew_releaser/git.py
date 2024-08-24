@@ -31,13 +31,9 @@ class Git:
             ],
         ]
         if commit_owner:
-            commands.append(
-                ['git', '-C', homebrew_tap, 'config', 'user.name', f'"{commit_owner}"']
-            )
+            commands.append(['git', '-C', homebrew_tap, 'config', 'user.name', f'"{commit_owner}"'])
         if commit_email:
-            commands.append(
-                ['git', '-C', homebrew_tap, 'config', 'user.email', commit_email]
-            )
+            commands.append(['git', '-C', homebrew_tap, 'config', 'user.email', commit_email])
 
         for command in commands:
             Git._run_git_subprocess(command)
